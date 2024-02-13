@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+int valoare(char c) {
+    if (c >= '0' && c <= '9') {
+        return c - '0';
+    } 
+    else if (c == 'A') {
+        return 10;
+    }
+    else {
+        return -1; 
+    }
+}
+
+double baza11InDecimal(string s) {
+    double rezultat = 0;
+    int punct = s.find('.'); 
+    if (punct == -1) {
+        punct = s.length(); 
+    }
+
+    for (int i = 0; i < punct; i++) {
+        int val = valoare(s[i]); 
+        if (val == -1) {
+            return -1; 
+        }
+        rezultat = rezultat * 11 + val;
+    }
+
+    for (int i = punct + 1; i < s.length(); i++) {
+        int val = valoare(s[i]); 
+        if (val == -1) {
+            return -1; 
+        }
+        rezultat = rezultat + val * pow(11, punct - i); 
+    }
+
+    return rezultat; 
+}
+
+int main() {
+    string s;
+    cout << "Introduceti un numar in baza 11: ";
+    cin >> s;
+    double d = baza11InDecimal(s);
+    if (d == -1) {
+        cout << "Intrare invalida" << endl;
+    }
+    else {
+        cout.precision(10);
+        cout << "Valoarea zecimala este: " << d << endl;
+    }
+    return 0;
+}
